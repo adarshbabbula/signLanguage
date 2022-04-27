@@ -136,30 +136,32 @@ while cap.isOpened():
       clf = joblib.load('model.pkl')
       y_pred = clf.predict(cleaned_landmark)
       if i==30:
-        if(k==0):
-          clf = joblib.load('model.pkl')
-          y_pred = clf.predict(cleaned_landmark)
-          s+=str(dictionary[y_pred[0]])
-        if(k==1):
-          clf = joblib.load('model.pkl')
-          y_pred = clf.predict(cleaned_landmark)
-          last=s[-1]
-          c=last
-          print("b: "+s[:-1])
-          s=str(s[:-1]+str(fun1(last, dictionary[str(y_pred[0])])))
-          print("a: "+s[:-1])
-          print("s: "+fun1(last, dictionary[str(y_pred[0])]))
-        if(k==2):
-          clf = joblib.load('model1.pkl')
-          y_pred = clf.predict(cleaned_landmark)
-          last=s[-1]
-          print(last,dictionary[str(y_pred[0])],c)
-          # s=s[:-1]+fun2(last,dictionary[str(y_pred[0])],c)
-        for i in s:
-          print(i,end=' ')
-        print(" ")
-        k=(k+1)%3
-        print(k)
+        # if(k==0):
+        #   clf = joblib.load('model.pkl')
+        #   y_pred = clf.predict(cleaned_landmark)
+        #   s+=str(dictionary[y_pred[0]])
+        # if(k==1):
+        #   clf = joblib.load('model.pkl')
+        #   y_pred = clf.predict(cleaned_landmark)
+        #   last=s[-1]
+        #   c=last
+        #   print("b: "+s[:-1])
+        #   s=str(s[:-1]+str(fun1(last, dictionary[str(y_pred[0])])))
+        #   print("a: "+s[:-1])
+        #   print("s: "+fun1(last, dictionary[str(y_pred[0])]))
+        # if(k==2):
+        #   clf = joblib.load('model1.pkl')
+        #   y_pred = clf.predict(cleaned_landmark)
+        #   last=s[-1]
+        #   print(last,dictionary[str(y_pred[0])],c)
+        #   # s=s[:-1]+fun2(last,dictionary[str(y_pred[0])],c)
+        # for i in s:
+        #   print(i,end=' ')
+        # print(" ")
+        # k=(k+1)%3
+        # print(k)
+        clf = joblib.load('model.pkl')
+        y_pred = clf.predict(cleaned_landmark)
         i=0
       i+=1
     image = cv2.putText(image, str(y_pred[0]), (50,150), cv2.FONT_HERSHEY_SIMPLEX,  3, (0,0,255), 2, cv2.LINE_AA) 
