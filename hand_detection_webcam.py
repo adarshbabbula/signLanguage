@@ -10,60 +10,37 @@ mp_hands = mp.solutions.hands
 s=''
 i=0
 k=0
+current=0
 vowels={"ఆ":"ా", "ఇ":"ి","ఈ":"ీ","ఉ":"ు","ఊ":"ూ", "ఋ":"ృ", "ౠ":"ౄ", "ఎ":"ె", "ఏ":"ే", "ఐ": "ై", "ఒ": "ొ", "ఓ": "ో", "ఔ": "ౌ", "అం": "ం", "అః":"ః" }
 dictionary={
   "a":'అ',
   "aa":"ఆ",
   "i":'ఇ',
-  "ii":"ఈ",
   "u": "ఉ",
-  "uu": "ఊ",
-  "ru": "ఋ",
-  "ruu": "ఋూ",
   "e":"ఎ",
-  "ei":"ఏ",
   "ai":"ఐ",
   "o": "ఒ",
-  "oo":"ఓ",
   "au": "ఔ",
   "am": "అం",
-  "ah":"అః",
   "ka": "క",
-  "kha": "ఖ",
   "ga": "గ",
-  "gha": "ఘ",
-  "ena":"ఙ",
-  "ca": "చ",
-  "cha": "ఛ",
   "ja": "జ",
-  "jha": "ఝ",
-  "ina": "ఞ",
   "tta": "ట",
-  "ttha":"ఠ",
-  "dda":"డ",
-  "ddha": "ఢ",
-  "ana":"ణ",
+  "da":"డ",
   "ta": "త",
-  "tha": "థ",
-  "da": "ద",
-  "dha": "ధ",
+  "dha": "ద",
   "na": "న",
   "pa":"ప",
   "fa":"ఫ",
   "ba": "బ",
-  "bha": "భ",
   "ma": "మ",
   "ya": "య",
   "ra": "ర",
   "la": "ల",
   "va": "వ",
-  "lha": "ళ",
-  "she":"శ",
-  "sha":"ష",
   "sa": "స",
   "ha":"హ",
-  "ksha":"క్ష",
-  "rha": "ఱ"
+  "cha": "చ",
 }
 # For webcam input:
 hands = mp_hands.Hands(
@@ -135,6 +112,8 @@ while cap.isOpened():
     if cleaned_landmark:
       clf = joblib.load('model.pkl')
       y_pred = clf.predict(cleaned_landmark)
+      if i==0:
+        current=y_pred[0]
       if i==30:
         # if(k==0):
         #   clf = joblib.load('model.pkl')
@@ -162,8 +141,13 @@ while cap.isOpened():
         # print(k)
         clf = joblib.load('model.pkl')
         y_pred = clf.predict(cleaned_landmark)
+        print(dictionary[y_pred[0]])
         i=0
-      i+=1
+      if current==y_pred[0]:
+        i+=1
+      else:
+        current=y_pred[0]
+        i=0
     image = cv2.putText(image, str(y_pred[0]), (50,150), cv2.FONT_HERSHEY_SIMPLEX,  3, (0,0,255), 2, cv2.LINE_AA) 
   cv2.imshow('MediaPipe Hands', image)
   
